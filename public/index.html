@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f05a9b"><title>Happy Birthday</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/birthday-fix.css">
+</head>
+<body>
+  <canvas id="fxCanvas" aria-hidden="true"></canvas>
+  <button class="celebrate-btn" id="celebrateBtn" title="Toggle full-screen celebration">✨</button>
+
+  <section class="welcome" id="welcome">
+    <div class="welcome-stars"></div>
+    <div class="welcome-content">
+      <span class="eyebrow">A little celebration for you</span>
+      <h1>Happy Birthday, <span id="heroName">My Favorite Person</span>!</h1>
+      <p>Today is all about you! <span aria-hidden="true">❤️</span></p>
+      <button class="primary-btn" id="openSurprise">Open Your Surprise <span>🎁</span></button>
+    </div>
+  </section>
+
+  <main id="surprise" class="surprise hidden">
+    <nav class="topbar"><strong>Birthday Surprise</strong><button id="replayBtn" class="icon-btn" title="Replay surprise">↻</button></nav>
+    <section class="section balloons-section" id="balloonsSection">
+      <div class="balloon-heading-wrap">
+        <div class="section-heading"><span>01</span><h2>Pop a little joy</h2></div>
+        <p class="section-copy">Choose a balloon. Every pop reveals a tiny birthday wish.</p>
+        <div class="balloon-actions">
+          <button class="secondary-btn" id="releaseBalloons">Release more balloons 🎈</button>
+          <span class="pop-counter"><strong id="popCount">0</strong> wishes popped</span>
+        </div>
+      </div>
+      <div id="balloonField" class="balloon-field" aria-label="Birthday balloon garden"></div>
+      <div class="wish-card" aria-live="polite">
+        <span class="wish-icon">✦</span>
+        <p id="balloonMessage">Click a balloon to reveal your wish</p>
+      </div>
+    </section>
+
+    <section class="section gallery-section" id="gallerySection">
+      <div class="section-heading"><span>02</span><h2>Our favorite moments</h2></div>
+      <div class="gallery-wish" id="galleryWish" aria-live="polite"><span class="gallery-wish-icon" aria-hidden="true">♡</span><p>Every memory here is a reason to smile today.</p></div>
+      <form id="uploadForm" class="upload-panel multi-upload-panel">
+        <div class="upload-slots">
+          <div class="upload-slot">
+            <label class="photo-slot" for="photoInput1"><img id="photoPreview1" alt="First photo preview"><span class="slot-label">Choose photo 1</span></label>
+            <input id="photoInput1" class="photo-input" type="file" accept="image/jpeg,image/png,image/webp">
+            <input id="captionInput1" class="caption-input" type="text" maxlength="120" placeholder="Caption 1">
+          </div>
+          <div class="upload-slot">
+            <label class="photo-slot" for="photoInput2"><img id="photoPreview2" alt="Second photo preview"><span class="slot-label">Choose photo 2</span></label>
+            <input id="photoInput2" class="photo-input" type="file" accept="image/jpeg,image/png,image/webp">
+            <input id="captionInput2" class="caption-input" type="text" maxlength="120" placeholder="Caption 2">
+          </div>
+          <div class="upload-slot">
+            <label class="photo-slot" for="photoInput3"><img id="photoPreview3" alt="Third photo preview"><span class="slot-label">Choose photo 3</span></label>
+            <input id="photoInput3" class="photo-input" type="file" accept="image/jpeg,image/png,image/webp">
+            <input id="captionInput3" class="caption-input" type="text" maxlength="120" placeholder="Caption 3">
+          </div>
+        </div>
+        <button class="secondary-btn upload-submit" type="submit">Add photos to gallery</button>
+      </form>
+      <div id="gallery" class="gallery"></div>
+      <p id="galleryEmpty" class="empty-state">Your memories will appear here.</p>
+    </section>
+
+    <section class="section letter-section">
+      <div class="section-heading"><span>03</span><h2>A letter for you</h2></div>
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open birthday letter">
+        <div class="envelope-back"></div><div class="letter"><h3 id="letterHeading">To Someone Truly Special ❤️</h3><p id="letterText"></p><button id="completeMessage" class="text-btn">Reveal complete message</button></div><div class="envelope-flap"></div><div class="envelope-front"></div><div class="seal">❤</div>
+      </div>
+    </section>
+
+    <section class="section cake-section">
+      <div class="section-heading"><span>04</span><h2>Make a wish</h2></div>
+      <div class="cake-wrap">
+        <div class="cake" aria-label="Birthday cake">
+          <div class="candles" id="candles"><i><b></b></i><i><b></b></i><i><b></b></i></div>
+          <div class="cake-top"></div><div class="cake-layer middle"></div><div class="cake-layer bottom"></div><div class="cake-plate"></div>
+        </div>
+      </div>
+      <p id="wishMessage" class="wish-message" role="status"></p>
+      <button class="primary-btn" id="wishBtn">Make a Wish ✨</button>
+    </section>
+
+    <section class="section gift-section">
+      <div class="section-heading"><span>05</span><h2>One last surprise</h2></div>
+      <div class="gift" id="gift" role="button" tabindex="0" aria-label="Open surprise gift"><div class="gift-lid"></div><div class="gift-box"><span>🎀</span></div></div>
+      <div id="giftReveal" class="gift-reveal hidden"><p id="giftMessage">You are loved more than words can say. This day is yours! ❤️</p><button id="replayGift" class="text-btn">Replay gift surprise</button></div>
+    </section>
+
+    <section class="final-screen"><h2>Made with <span>❤️</span> Just for You</h2></section>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button id="closeLightbox" class="lightbox-close" aria-label="Close">×</button><button id="prevPhoto" class="lightbox-nav prev" aria-label="Previous">‹</button><figure><img id="lightboxImage" alt=""><figcaption id="lightboxCaption"></figcaption></figure><button id="nextPhoto" class="lightbox-nav next" aria-label="Next">›</button>
+  </div>
+
+  <aside class="music-player" id="musicPlayer">
+    <button id="musicToggle" class="music-toggle" aria-label="Play music">▶</button>
+    <div class="music-info"><strong>Birthday mood</strong><span id="musicTime">0:00 / 0:00</span><div class="visualizer"><i></i><i></i><i></i><i></i><i></i></div></div>
+    <input id="musicProgress" type="range" min="0" max="100" value="0" aria-label="Track progress">
+    <input id="volume" type="range" min="0" max="1" step="0.05" value="0.5" aria-label="Volume">
+    <audio id="audio"><source src="/audio/birthday.mp3" type="audio/mpeg"></audio>
+  </aside>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
